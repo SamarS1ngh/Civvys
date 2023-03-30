@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'CIVVYS',
       theme: ThemeData(
-          primaryColor: Color.fromARGB(255, 218, 215, 215),
+          primaryColor: const Color.fromARGB(255, 218, 215, 215),
           scaffoldBackgroundColor: Colors.white),
       home: const MyHomePage(title: 'CIVVYS'),
     );

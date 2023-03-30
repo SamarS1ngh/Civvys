@@ -1,30 +1,30 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: camel_case_types
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class topPicks extends StatelessWidget {
+  // ignore: non_constant_identifier_names
   var product_list = [
-    {"name": "Item 1", "picture": "listtileimages/kids.jpg", "price": 100},
-    {"name": "Item 1", "picture": "listtileimages/kids.jpg", "price": 100},
-    {"name": "Item 1", "picture": "listtileimages/kids.jpg", "price": 100},
-    {"name": "Item 1", "picture": "listtileimages/kids.jpg", "price": 100},
-    {"name": "Item 1", "picture": "listtileimages/kids.jpg", "price": 100},
-    {"name": "Item 1", "picture": "listtileimages/kids.jpg", "price": 100},
-    {"name": "Item 1", "picture": "listtileimages/kids.jpg", "price": 100},
-    {"name": "Item 1", "picture": "listtileimages/kids.jpg", "price": 100},
-    {"name": "Item 1", "picture": "listtileimages/kids.jpg", "price": 100},
-    {"name": "Item 1", "picture": "listtileimages/kids.jpg", "price": 100},
-    {"name": "Item 1", "picture": "listtileimages/kids.jpg", "price": 100},
-    {"name": "Item 1", "picture": "listtileimages/kids.jpg", "price": 100},
-    {"name": "Item 1", "picture": "listtileimages/kids.jpg", "price": 100},
-    {"name": "Item 1", "picture": "listtileimages/kids.jpg", "price": 100},
-    {"name": "Item 1", "picture": "listtileimages/kids.jpg", "price": 100},
-    {"name": "Item 1", "picture": "listtileimages/kids.jpg", "price": 100},
-    {"name": "Item 1", "picture": "listtileimages/kids.jpg", "price": 100},
-    {"name": "Item 1", "picture": "listtileimages/kids.jpg", "price": 100},
-    {"name": "Item 1", "picture": "listtileimages/kids.jpg", "price": 100},
-    {"name": "Item 1", "picture": "listtileimages/kids.jpg", "price": 100},
+    {"name": "Item name", "picture": "listtileimages/kids.jpg", "price": 100},
+    {"name": "Item name", "picture": "listtileimages/kids.jpg", "price": 100},
+    {"name": "Item name", "picture": "listtileimages/kids.jpg", "price": 100},
+    {"name": "Item name", "picture": "listtileimages/kids.jpg", "price": 100},
+    {"name": "Item name", "picture": "listtileimages/kids.jpg", "price": 100},
+    {"name": "Item name", "picture": "listtileimages/kids.jpg", "price": 100},
+    {"name": "Item name", "picture": "listtileimages/kids.jpg", "price": 100},
+    {"name": "Item name", "picture": "listtileimages/kids.jpg", "price": 100},
+    {"name": "Item name", "picture": "listtileimages/kids.jpg", "price": 100},
+    {"name": "Item name", "picture": "listtileimages/kids.jpg", "price": 100},
+    {"name": "Item name", "picture": "listtileimages/kids.jpg", "price": 100},
+    {"name": "Item name", "picture": "listtileimages/kids.jpg", "price": 100},
+    {"name": "Item name", "picture": "listtileimages/kids.jpg", "price": 100},
+    {"name": "Item name", "picture": "listtileimages/kids.jpg", "price": 100},
+    {"name": "Item name", "picture": "listtileimages/kids.jpg", "price": 100},
+    {"name": "Item name", "picture": "listtileimages/kids.jpg", "price": 100},
+    {"name": "Item name", "picture": "listtileimages/kids.jpg", "price": 100},
+    {"name": "Item name", "picture": "listtileimages/kids.jpg", "price": 100},
+    {"name": "Item name", "picture": "listtileimages/kids.jpg", "price": 100},
+    {"name": "Item name", "picture": "listtileimages/kids.jpg", "price": 100},
   ];
 
   @override
@@ -72,34 +72,30 @@ class singleProduct extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.center,
-              // mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  prod_name,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+          Column(
+            children: <Widget>[
+              Text(
+                prod_name,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                 ),
-                Text(
-                  "Want Something Peasant?",
-                  style: TextStyle(
-                    color: Colors.black54,
-                    fontSize: 16,
-                  ),
+              ),
+              const Text(
+                "Item Info",
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 16,
                 ),
-                Text(
-                  "Then fucking buy it u imbecile!",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black38,
-                  ),
+              ),
+              const Text(
+                "Why this text?",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black38,
                 ),
-              ],
-            ),
+              ),
+            ],
           )
         ],
       ))),
