@@ -73,7 +73,7 @@ class singleProduct extends StatelessWidget {
             ),
           ),
           Column(
-            children: <Widget>[
+            children: <Widget>[                                                 
               Text(
                 prod_name,
                 style: const TextStyle(

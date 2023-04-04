@@ -21,7 +21,7 @@ class _carouselState extends State<carousel> {
             aspectRatio: 16 / 9,
             initialPage: 0,
             autoPlay: true,
-            autoPlayInterval: Duration(milliseconds: 8000),
+            autoPlayInterval: Duration(milliseconds: 4000),
             autoPlayAnimationDuration: Duration(milliseconds: 3000),
             autoPlayCurve: Curves.fastOutSlowIn,
             enlargeCenterPage: true,

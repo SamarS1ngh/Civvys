@@ -1,5 +1,7 @@
 // import 'package:flutter/cupertino.dart';
 // import 'package:flutter/src/widgets/container.dart';
+import 'package:CIVVYS/Auth/options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class drawerWidget extends StatelessWidget {
@@ -10,12 +12,12 @@ class drawerWidget extends StatelessWidget {
       context: context,
       removeTop: true,
       child: Container(
-        decoration: BoxDecoration(color: Colors.white),
+        decoration: const BoxDecoration(color: Colors.white),
         width: MediaQuery.of(context).size.width * 0.8,
         child: Drawer(
           child: ListView(
             children: <Widget>[
-              UserAccountsDrawerHeader(
+              const UserAccountsDrawerHeader(
                   decoration: BoxDecoration(
                     color: Colors.black,
                   ),
@@ -27,7 +29,7 @@ class drawerWidget extends StatelessWidget {
                       style: TextStyle(color: Colors.white))),
               InkWell(
                 onTap: () {},
-                child: ListTile(
+                child: const ListTile(
                   title: Text(
                     "Profile",
                   ),
@@ -39,7 +41,7 @@ class drawerWidget extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {},
-                child: ListTile(
+                child: const ListTile(
                   title: Text(
                     "Categories",
                   ),
@@ -51,7 +53,7 @@ class drawerWidget extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {},
-                child: ListTile(
+                child: const ListTile(
                   title: Text(
                     "My Orders",
                   ),
@@ -63,7 +65,7 @@ class drawerWidget extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {},
-                child: ListTile(
+                child: const ListTile(
                   title: Text(
                     "My Cart",
                   ),
@@ -75,7 +77,7 @@ class drawerWidget extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {},
-                child: ListTile(
+                child: const ListTile(
                   title: Text(
                     "My WishList",
                   ),
@@ -85,12 +87,12 @@ class drawerWidget extends StatelessWidget {
                   iconColor: Colors.black,
                 ),
               ),
-              Divider(
+              const Divider(
                 height: 50,
               ),
               InkWell(
                 onTap: () {},
-                child: ListTile(
+                child: const ListTile(
                   title: Text(
                     "About",
                   ),
@@ -101,8 +103,15 @@ class drawerWidget extends StatelessWidget {
                 ),
               ),
               InkWell(
-                onTap: () {},
-                child: ListTile(
+                onTap: () async {
+                  await FirebaseAuth.instance.signOut();
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => options()),
+                      (route) => false);
+                },
+                child: const ListTile(
                   title: Text(
                     "LogOut",
                   ),
