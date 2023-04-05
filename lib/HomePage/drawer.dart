@@ -1,11 +1,39 @@
 // import 'package:flutter/cupertino.dart';
 // import 'package:flutter/src/widgets/container.dart';
+import 'dart:async';
+
+import 'package:CIVVYS/Auth/firebase.dart';
 import 'package:CIVVYS/Auth/options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-class drawerWidget extends StatelessWidget {
-  const drawerWidget({super.key});
+class drawer extends StatefulWidget {
+  const drawer({super.key});
+
+  @override
+  State<drawer> createState() => _drawerState();
+}
+
+class _drawerState extends State<drawer> {
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  String name = '';
+  String email = '';
+  void getData() async {
+    Map data = (await DatabaseService()
+        .getUser(FirebaseAuth.instance.currentUser?.uid));
+    setState(() {
+      name = data['Name'];
+      email = data['Email'];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MediaQuery.removePadding(
@@ -17,16 +45,16 @@ class drawerWidget extends StatelessWidget {
         child: Drawer(
           child: ListView(
             children: <Widget>[
-              const UserAccountsDrawerHeader(
+              UserAccountsDrawerHeader(
                   decoration: BoxDecoration(
                     color: Colors.black,
                   ),
                   accountName: Text(
-                    'Samar',
+                    "$name",
                     style: TextStyle(color: Colors.white),
                   ),
-                  accountEmail: Text('accountEmail@gmail.com',
-                      style: TextStyle(color: Colors.white))),
+                  accountEmail:
+                      Text('$email', style: TextStyle(color: Colors.white))),
               InkWell(
                 onTap: () {},
                 child: const ListTile(
@@ -105,6 +133,7 @@ class drawerWidget extends StatelessWidget {
               InkWell(
                 onTap: () async {
                   await FirebaseAuth.instance.signOut();
+                  await GoogleSignIn().signOut();
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(

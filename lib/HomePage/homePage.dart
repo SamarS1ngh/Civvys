@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
           ),
-          drawer: drawerWidget(),
+          drawer: drawer(),
           body: ListView(
             physics: BouncingScrollPhysics(),
             children: <Widget>[

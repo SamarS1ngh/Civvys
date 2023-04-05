@@ -1,6 +1,7 @@
 // ignore_for_file: camel_case_types
 import 'package:CIVVYS/Auth/firebase.dart';
 import 'package:CIVVYS/HomePage/homePage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'login.dart';
@@ -16,52 +17,70 @@ class _signUpState extends State<signUp> {
   final formkey = GlobalKey<FormState>();
   bool show = true;
   bool isloggedin = false;
-  final TextEditingController email = TextEditingController();
-  final TextEditingController pswd = TextEditingController();
-  final TextEditingController name = TextEditingController();
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _pswd = TextEditingController();
+  final TextEditingController _name = TextEditingController();
 
-  handleSubmit() async {
+  handleSubmit() {
     if (formkey.currentState!.validate()) {
       setState(() {
         isloggedin = !isloggedin;
       });
-      User? user = await Auth()
-          .registerWithEmailAndPassword(email: email.text, password: pswd.text);
+      Auth().registerWithEmailAndPassword(
+          name: _name.text, email: _email.text, password: _pswd.text);
 
-      if (user != null) {
+      if (FirebaseAuth.instance.currentUser != null) {
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (BuildContext context) => MyHomePage()));
       } else {
         setState(() {
           isloggedin = !isloggedin;
         });
-        return showDialog(
+        showDialog(
             context: context,
-            builder: (BuildContext) {
+            builder: (context) {
               return AlertDialog(
                 actions: <Widget>[
                   TextButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: Text(
+                      child: const Text(
                         'Okay',
                         style: TextStyle(color: Colors.blue),
                       ))
                 ],
-                title: Text('Already Registered'),
-                content: Text(
+                title: const Text('Already Registered'),
+                content: const Text(
                     'This Email is already registered with us. Try signing in'),
               );
             });
       }
+      //  });
+      // await FirebaseAuth.instance.currentUser?.sendEmailVerification();
+      // showDialog(
+      //     context: context,
+      //     builder: (cntxt) {
+      //       return AlertDialog(
+      //         actions: <Widget>[
+      //           TextButton(
+      //               onPressed: () {
+      //                 Navigator.of(context).pop();
+      //               },
+      //               child: const Text('Okay'))
+      //         ],
+      //         title: const Text('Email Verification'),
+      //         content: const Text(
+      //             'We have sent a verification link to your Email. Please verify your Email to continue further.'),
+      //       );
+      //});
     }
   }
 
   @override
   void dispose() {
-    email.dispose();
-    pswd.dispose();
+    _email.dispose();
+    _pswd.dispose();
     super.dispose();
   }
 
@@ -114,7 +133,7 @@ class _signUpState extends State<signUp> {
                                 fontSize: 26,
                                 fontWeight: FontWeight.w500),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 28,
                           ),
                           Form(
@@ -136,7 +155,7 @@ class _signUpState extends State<signUp> {
                                           }
                                           return null;
                                         },
-                                        controller: name,
+                                        controller: _name,
                                         // keyboardType: TextInputType.emailAddress,
                                         cursorColor: Colors.black,
                                         cursorWidth: 1,
@@ -160,7 +179,7 @@ class _signUpState extends State<signUp> {
                                                     BorderRadius.circular(
                                                         10)))),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 14,
                                   ),
                                   Container(
@@ -178,7 +197,7 @@ class _signUpState extends State<signUp> {
                                           }
                                           return null;
                                         },
-                                        controller: email,
+                                        controller: _email,
                                         keyboardType:
                                             TextInputType.emailAddress,
                                         cursorColor: Colors.black,
@@ -221,7 +240,7 @@ class _signUpState extends State<signUp> {
                                           return null;
                                         },
                                         obscureText: show ? true : false,
-                                        controller: pswd,
+                                        controller: _pswd,
                                         cursorColor: Colors.black,
                                         cursorWidth: 1,
                                         style: const TextStyle(
@@ -267,13 +286,15 @@ class _signUpState extends State<signUp> {
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     child: isloggedin
-                                        ? Center(
+                                        ? const Center(
                                             child: CircularProgressIndicator(
                                               color: Colors.black,
                                             ),
                                           )
                                         : TextButton(
-                                            onPressed: handleSubmit,
+                                            onPressed: () async {
+                                              handleSubmit();
+                                            },
                                             child: const Text(
                                               'Create Account',
                                               style: TextStyle(
@@ -296,7 +317,7 @@ class _signUpState extends State<signUp> {
                                       Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
                                               builder: (BuildContext context) =>
-                                                  login()));
+                                                  const login()));
                                     },
                                     child: RichText(
                                       text: TextSpan(
@@ -354,7 +375,7 @@ class _signUpState extends State<signUp> {
                               ],
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 30,
                           ),
                           Container(
@@ -368,11 +389,18 @@ class _signUpState extends State<signUp> {
                                     shape: MaterialStateProperty.all<
                                             RoundedRectangleBorder>(
                                         RoundedRectangleBorder(
-                                            side:
-                                                BorderSide(color: Colors.white),
+                                            side: const BorderSide(
+                                                color: Colors.white),
                                             borderRadius:
                                                 BorderRadius.circular(25)))),
-                                onPressed: () {},
+                                onPressed: () async {
+                                  await Auth().signInWithGoogle(context).then(
+                                      (user) => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  MyHomePage())));
+                                },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
@@ -382,7 +410,7 @@ class _signUpState extends State<signUp> {
                                       width: 38,
                                     ),
                                     const Text(
-                                      'Signup with Google',
+                                      'Continue with Google',
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w400,

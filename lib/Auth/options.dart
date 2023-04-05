@@ -1,6 +1,10 @@
 import 'package:CIVVYS/Auth/signup.dart';
+import 'package:CIVVYS/HomePage/homePage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
+import 'firebase.dart';
 import 'login.dart';
 
 class options extends StatefulWidget {
@@ -120,7 +124,13 @@ class _optionsState extends State<options> {
                                       side: BorderSide(color: Colors.white),
                                       borderRadius:
                                           BorderRadius.circular(25)))),
-                          onPressed: () {},
+                          onPressed: () async {
+                            await Auth().signInWithGoogle(context).then(
+                                (user) => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => MyHomePage())));
+                          },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[

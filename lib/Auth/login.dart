@@ -21,6 +21,26 @@ class _loginState extends State<login> {
   final TextEditingController email = TextEditingController();
   final TextEditingController pswd = TextEditingController();
 
+  handleReset() async {
+    await pswdReset().resetPassword(email.text);
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            actions: <Widget>[
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Okay'))
+            ],
+            title: Text('Password Reset'),
+            content: Text(
+                'A password reset link has been sent to your provided Email address. Visit that link to reset your password and try again.'),
+          );
+        });
+  }
+
   handleSubmit() async {
     if (formkey.currentState!.validate()) {
       setState(() {
@@ -225,9 +245,11 @@ class _loginState extends State<login> {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         GestureDetector(
-                                          onTap: () {},
+                                          onTap: () {
+                                            handleReset();
+                                          },
                                           child: const Text(
-                                            'Forgot Password?',
+                                            'Reset Password?',
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold),
@@ -354,7 +376,14 @@ class _loginState extends State<login> {
                                                 color: Colors.white),
                                             borderRadius:
                                                 BorderRadius.circular(25)))),
-                                onPressed: () {},
+                                onPressed: () async {
+                                  await Auth().signInWithGoogle(context).then(
+                                      (user) => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  MyHomePage())));
+                                },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
