@@ -1,6 +1,6 @@
 // ignore_for_file: camel_case_types
 import 'package:CIVVYS/Auth/firebase.dart';
-import 'package:CIVVYS/HomePage/homePage.dart';
+import 'package:CIVVYS/Pages/HomePage/homePage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

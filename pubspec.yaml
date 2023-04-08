@@ -41,6 +41,8 @@ dependencies:
   firebase_auth: ^4.4.0
   google_sign_in: ^6.0.2
   cloud_firestore: ^4.5.0
+ 
+  razorpay_flutter: ^1.3.4
 
 dev_dependencies:
   flutter_test:
@@ -83,6 +85,25 @@ flutter:
     - listtileimages/toddlers.jpeg
     - listtileimages/winterwear.jpeg
     - listtileimages/springwear.JPG
+    - images/products/aot tshirt.jpg
+    - images/products/bakugo tshirt.jpg
+    - images/products/black hoodie.jpg
+    - images/products/black leather jacket.jpg
+    - images/products/black shirt.jpg
+    - images/products/dabi tshirt.png
+    - images/products/karasuno tshirt.jpg
+    - images/products/maroon shirt half.jpg
+    - images/products/marvel hoodie.png
+    - images/products/men shacket.jpeg
+    - images/products/white hoodie.jpg
+    - images/products/white women sweatshirt.jpg
+    - images/products/women hoodie.jpg
+    - images/products/women olive shirt.jpg
+    - images/products/women shacket long.jpg
+
+
+
+    
     
      
 

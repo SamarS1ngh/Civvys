@@ -9,6 +9,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import 'package:CIVVYS/Pages/Cart/cart.dart';
+
 class drawer extends StatefulWidget {
   const drawer({super.key});
 
@@ -23,15 +25,19 @@ class _drawerState extends State<drawer> {
     getData();
   }
 
+  bool loading = true;
   String name = '';
   String email = '';
   void getData() async {
     Map data = (await DatabaseService()
         .getUser(FirebaseAuth.instance.currentUser?.uid));
-    setState(() {
-      name = data['Name'];
-      email = data['Email'];
-    });
+    if (data.isNotEmpty) {
+      setState(() {
+        loading = false;
+        name = data['Name'];
+        email = data['Email'];
+      });
+    }
   }
 
   @override
@@ -46,15 +52,19 @@ class _drawerState extends State<drawer> {
           child: ListView(
             children: <Widget>[
               UserAccountsDrawerHeader(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.black,
                   ),
-                  accountName: Text(
-                    "$name",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  accountEmail:
-                      Text('$email', style: TextStyle(color: Colors.white))),
+                  accountName: loading
+                      ? const CircularProgressIndicator(
+                          color: Colors.white,
+                        )
+                      : Text(
+                          "$name",
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                  accountEmail: Text('$email',
+                      style: const TextStyle(color: Colors.white))),
               InkWell(
                 onTap: () {},
                 child: const ListTile(
@@ -63,18 +73,6 @@ class _drawerState extends State<drawer> {
                   ),
                   leading: Icon(
                     Icons.person,
-                  ),
-                  iconColor: Colors.black,
-                ),
-              ),
-              InkWell(
-                onTap: () {},
-                child: const ListTile(
-                  title: Text(
-                    "Categories",
-                  ),
-                  leading: Icon(
-                    Icons.dashboard,
                   ),
                   iconColor: Colors.black,
                 ),
@@ -92,7 +90,12 @@ class _drawerState extends State<drawer> {
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (BuildContext context) {
+                    return cart();
+                  }));
+                },
                 child: const ListTile(
                   title: Text(
                     "My Cart",
@@ -107,7 +110,7 @@ class _drawerState extends State<drawer> {
                 onTap: () {},
                 child: const ListTile(
                   title: Text(
-                    "My WishList",
+                    "Favorites",
                   ),
                   leading: Icon(
                     Icons.favorite,
@@ -127,7 +130,7 @@ class _drawerState extends State<drawer> {
                   leading: Icon(
                     Icons.help,
                   ),
-                  iconColor: Colors.black,
+                  iconColor: Colors.black54,
                 ),
               ),
               InkWell(
@@ -137,17 +140,18 @@ class _drawerState extends State<drawer> {
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) => options()),
+                          builder: (BuildContext context) => const options()),
                       (route) => false);
                 },
                 child: const ListTile(
                   title: Text(
                     "LogOut",
+                    style: TextStyle(color: Colors.red),
                   ),
                   leading: Icon(
                     Icons.logout,
                   ),
-                  iconColor: Colors.black,
+                  iconColor: Colors.red,
                 ),
               ),
             ],

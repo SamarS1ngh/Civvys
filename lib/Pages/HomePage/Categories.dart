@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, camel_case_types, non_constant_identifier_names
 
+import 'package:CIVVYS/Pages/productPages/men.dart';
 import 'package:flutter/material.dart';
 
 class horizontal_List extends StatelessWidget {
@@ -56,7 +57,9 @@ class Style extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Men();
+          },
           child: Container(
             width: 170,
             height: 100,

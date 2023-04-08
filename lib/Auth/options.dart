@@ -1,5 +1,5 @@
 import 'package:CIVVYS/Auth/signup.dart';
-import 'package:CIVVYS/HomePage/homePage.dart';
+import 'package:CIVVYS/Pages/HomePage/homePage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';

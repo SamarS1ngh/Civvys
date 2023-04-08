@@ -63,6 +63,14 @@ class Auth {
             await auth.signInWithCredential(credential);
 
         user = userCredential.user;
+        await FirebaseFirestore.instance
+            .collection('UserData')
+            .doc(FirebaseAuth.instance.currentUser?.uid)
+            .set({
+          'UID': FirebaseAuth.instance.currentUser?.uid,
+          'Email': user?.email,
+          'Name': user?.displayName
+        });
       } on FirebaseAuthException catch (e) {
         if (e.code == 'account-exists-with-different-credential') {
           ScaffoldMessenger.of(context).showSnackBar(
