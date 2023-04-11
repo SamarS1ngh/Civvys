@@ -85,8 +85,8 @@ class SimilarProds extends StatelessWidget {
                   .push(MaterialPageRoute(builder: (BuildContext context) {
                 return productPage(
                     itemName: product_list[index]['name']!,
-                    price: product_list[index]['price']!,
-                    picUrl: product_list[index]['picture']!);
+                    itemPrice: product_list[index]['price']!,
+                    itemPic: product_list[index]['picture']!);
               }));
             },
             child: Container(

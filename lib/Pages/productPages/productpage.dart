@@ -1,4 +1,5 @@
 import 'package:CIVVYS/Auth/login.dart';
+import 'package:CIVVYS/Pages/Cart/cartProd.dart';
 import 'package:CIVVYS/Pages/HomePage/topPicks.dart';
 import 'package:CIVVYS/Pages/productPages/similarprods.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,19 +8,22 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../../Auth/firebase.dart';
 
 class productPage extends StatefulWidget {
-  String itemName = '';
-  String price = '';
-  String picUrl = '';
+  String itemName;
+  String itemPrice;
+  String itemPic;
 
   productPage(
-      {required this.itemName, required this.price, required this.picUrl});
+      {required this.itemName, required this.itemPrice, required this.itemPic});
 
   @override
   State<productPage> createState() => _productPageState();
 }
 
 class _productPageState extends State<productPage> {
-  Razorpay _razorpay = Razorpay();
+  final Razorpay _razorpay = Razorpay();
+  // String productName = '';
+  // String productPrice = '';
+  // String productPic = '';
   @override
   void initState() {
     super.initState();
@@ -27,6 +31,9 @@ class _productPageState extends State<productPage> {
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+    // String productName = widget.itemName;
+    // String productPrice = widget.price;
+    // String productPic = widget.picUrl;
   }
 
   @override
@@ -39,8 +46,7 @@ class _productPageState extends State<productPage> {
   void openCheckout() async {
     var options = {
       'key': 'rzp_test_606fU3NK63EjbH',
-      'amount':
-          int.parse(widget.price.replaceAll(RegExp(r'[^0-9]'), '')) * i * 100,
+      'amount': int.parse(widget.itemPrice) * i * 100,
       'name': FirebaseAuth.instance.currentUser?.displayName,
       'description': 'Payment',
       'prefill': {
@@ -113,7 +119,9 @@ class _productPageState extends State<productPage> {
   bool liked = false;
   String name = '';
   String size = 'Size';
+  String color = 'Color';
   String? fit;
+  String? _color;
 
   void getData() async {
     Map data = (await DatabaseService()
@@ -137,17 +145,6 @@ class _productPageState extends State<productPage> {
               title: Text("Hey $name!",
                   style: const TextStyle(color: Colors.black)),
               backgroundColor: Colors.white,
-              // actions: <Widget>[
-              //  IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
-              // IconButton(
-              //   onPressed: () {},
-              //   icon: const Icon(
-              //     Icons.shopping_cart,
-              //   ),
-              //   splashColor: Colors.white,
-              //   splashRadius: 35,
-              // ),
-              //  ],
             )),
         bottomNavigationBar: Container(
           //color: Colors.black,
@@ -164,7 +161,7 @@ class _productPageState extends State<productPage> {
                             fontWeight: FontWeight.w500, fontSize: 17),
                       ),
                       Text(
-                        '₹${int.parse(widget.price.replaceAll(RegExp(r'[^0-9]'), '')) * i}',
+                        '₹${int.parse(widget.itemPrice) * i}',
                         style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20),
                       )
@@ -192,7 +189,7 @@ class _productPageState extends State<productPage> {
             children: [
               Container(
                 height: 300,
-                child: Image.asset(widget.picUrl),
+                child: Image.asset(widget.itemPic),
               ),
               Container(
                 alignment: Alignment.bottomLeft,
@@ -213,7 +210,7 @@ class _productPageState extends State<productPage> {
                 child: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 10, 35, 0),
                     child: Text(
-                      '₹${int.parse(widget.price.replaceAll(RegExp(r'[^0-9]'), ''))}',
+                      '₹${int.parse(widget.itemPrice)}',
                       style: const TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 17),
                     )),
@@ -339,13 +336,72 @@ class _productPageState extends State<productPage> {
                                           child: const Text('Done'))
                                     ],
                                     title: const Text('Choose Color'),
+                                    content: Column(
+                                      children: [
+                                        RadioListTile(
+                                          title: Text('Black'),
+                                          value: 'Black',
+                                          groupValue: _color,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              color = value.toString();
+                                              _color = value.toString();
+                                            });
+                                          },
+                                        ),
+                                        RadioListTile(
+                                          title: Text('Blue'),
+                                          value: 'Blue',
+                                          groupValue: _color,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              color = value.toString();
+                                              _color = value.toString();
+                                            });
+                                          },
+                                        ),
+                                        RadioListTile(
+                                          title: Text('Green'),
+                                          value: 'Green',
+                                          groupValue: _color,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              color = value.toString();
+                                              _color = value.toString();
+                                            });
+                                          },
+                                        ),
+                                        RadioListTile(
+                                          title: Text('Red'),
+                                          value: 'Red',
+                                          groupValue: _color,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              color = value.toString();
+                                              _color = value.toString();
+                                            });
+                                          },
+                                        ),
+                                        RadioListTile(
+                                          title: Text('White'),
+                                          value: 'White',
+                                          groupValue: _color,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              color = value.toString();
+                                              _color = value.toString();
+                                            });
+                                          },
+                                        ),
+                                      ],
+                                    ),
                                   );
                                 });
                           },
                           child: Row(
-                            children: const [
+                            children: [
                               Text(
-                                'Color ',
+                                '$color',
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.black54),
                               ),
@@ -552,7 +608,7 @@ class _productPageState extends State<productPage> {
                 height: MediaQuery.of(context).size.height,
                 child: SimilarProds(
                   prodName: widget.itemName,
-                  picUrl: widget.picUrl,
+                  picUrl: widget.itemPic,
                 ),
               )
             ],

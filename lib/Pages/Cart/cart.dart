@@ -1,4 +1,4 @@
-import 'package:CIVVYS/Pages/Cart/cardProd.dart';
+import 'package:CIVVYS/Pages/Cart/cartProd.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -113,13 +113,13 @@ class _cartState extends State<cart> {
             elevation: 0.4,
             centerTitle: true,
             title: const Text("Cart", style: TextStyle(color: Colors.black)),
-            actions: [
-              IconButton(onPressed: () {}, icon: const Icon(Icons.search))
-            ],
+            // actions: [
+            //   IconButton(onPressed: () {}, icon: const Icon(Icons.search))
+            // ],
             backgroundColor: Colors.white,
           ),
         ),
-        body: const cardProducts(),
+        body: cartProducts(),
         bottomNavigationBar: Row(
           children: [
             const Expanded(
