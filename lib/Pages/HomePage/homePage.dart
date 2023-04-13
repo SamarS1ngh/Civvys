@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:CIVVYS/Pages/HomePage/carousel.dart';
 import 'package:CIVVYS/Pages/HomePage/topPicks.dart';
 import 'package:CIVVYS/Pages/Cart/cart.dart';
@@ -39,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     onPressed: () {
                       Navigator.of(context).push(
                           MaterialPageRoute(builder: (BuildContext context) {
-                        return cart();
+                        return const cart();
                       }));
                     },
                     icon: const Icon(
@@ -64,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         color: Colors.grey[100],
                         borderRadius: BorderRadius.circular(15)),
                     child: TextFormField(
-                      style: TextStyle(fontSize: 14),
+                      style: const TextStyle(fontSize: 14),
                       autocorrect: true,
                       controller: _search,
                       enableSuggestions: true,
@@ -78,19 +76,20 @@ class _MyHomePageState extends State<MyHomePage> {
                                 onPressed: () {
                                   FocusScope.of(context).unfocus();
                                 },
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.search,
                                   color: Colors.black,
                                 )),
                           ),
                           hintText: 'Search...',
-                          contentPadding: EdgeInsets.fromLTRB(20, 12, 12, 12),
+                          contentPadding:
+                              const EdgeInsets.fromLTRB(20, 12, 12, 12),
                           isDense: true,
-                          enabledBorder: OutlineInputBorder(
+                          enabledBorder: const OutlineInputBorder(
                               borderSide:
                                   BorderSide(color: Colors.transparent)),
                           // borderRadius: BorderRadius.circular(15)),
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                               borderSide:
                                   BorderSide(color: Colors.transparent))),
                     ),
@@ -107,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 horizontal_List(),
                 const Padding(
-                  padding: EdgeInsets.fromLTRB(20, 22, 0, 0),
+                  padding: EdgeInsets.fromLTRB(20, 22, 0, 15),
                   child: Text(
                     'Top Picks',
                     style: TextStyle(
@@ -118,9 +117,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 //grid view
                 Container(
-                  // height: 300,
-                  child: topPicks(),
-                )
+                    height: MediaQuery.of(context).size.height * 2,
+                    child: topPicks())
               ],
             )),
       ),

@@ -23,7 +23,6 @@ class _cartState extends State<cart> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _razorpay.clear();
   }
@@ -58,9 +57,9 @@ class _cartState extends State<cart> {
             actions: [
               TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: Text('Okay'))
+                  child: const Text('Okay'))
             ],
-            title: Text("SUCCESS!"),
+            title: const Text("SUCCESS!"),
             content: Text(
                 'PaymentID: ${response.paymentId} ${response.orderId} ${response.signature}'),
           );
@@ -75,9 +74,9 @@ class _cartState extends State<cart> {
             actions: [
               TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: Text('Okay'))
+                  child: const Text('Okay'))
             ],
-            title: Text("FAILED!"),
+            title: const Text("FAILED!"),
             content:
                 Text('Code: ${response.code} -Message : ${response.message}'),
           );
@@ -92,9 +91,9 @@ class _cartState extends State<cart> {
             actions: [
               TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: Text('Okay'))
+                  child: const Text('Okay'))
             ],
-            title: Text("External Wallet"),
+            title: const Text("External Wallet"),
             content: Text('Wallet Name: ${response.walletName}'),
           );
         });
@@ -113,40 +112,43 @@ class _cartState extends State<cart> {
             elevation: 0.4,
             centerTitle: true,
             title: const Text("Cart", style: TextStyle(color: Colors.black)),
-            // actions: [
-            //   IconButton(onPressed: () {}, icon: const Icon(Icons.search))
-            // ],
             backgroundColor: Colors.white,
           ),
         ),
-        body: cartProducts(),
-        bottomNavigationBar: Row(
-          children: [
-            const Expanded(
-                child: ListTile(
-              title: Text(
-                'Total',
-                style: TextStyle(fontWeight: FontWeight.w600),
+        body: cartProducts.cartItems.isNotEmpty
+            ? cartProducts()
+            : const Center(
+                child: Text('Nothing in the cart'),
               ),
-              subtitle: Text(
-                '₹230',
-                style: TextStyle(fontWeight: FontWeight.w500),
-              ),
-            )),
-            Expanded(
-                child: Container(
-              color: Colors.black,
-              child: TextButton(
-                  onPressed: () {
-                    openCheckout();
-                  },
-                  child: const Text(
-                    'Check Out',
-                    style: TextStyle(color: Colors.white),
+        bottomNavigationBar: cartProducts.cartItems.isNotEmpty
+            ? Row(
+                children: [
+                  const Expanded(
+                      child: ListTile(
+                    title: Text(
+                      'Total',
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    subtitle: Text(
+                      '₹230',
+                      style: TextStyle(fontWeight: FontWeight.w500),
+                    ),
                   )),
-            ))
-          ],
-        ),
+                  Expanded(
+                      child: Container(
+                    color: Colors.black,
+                    child: TextButton(
+                        onPressed: () {
+                          openCheckout();
+                        },
+                        child: const Text(
+                          'Check Out',
+                          style: TextStyle(color: Colors.white),
+                        )),
+                  ))
+                ],
+              )
+            : null,
       ),
     );
   }

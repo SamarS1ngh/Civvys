@@ -2,7 +2,6 @@
 
 import 'package:CIVVYS/Pages/productPages/Categorypage.dart';
 import 'package:flutter/material.dart';
-import 'topPicks.dart';
 
 class horizontal_List extends StatelessWidget {
   horizontal_List({super.key});

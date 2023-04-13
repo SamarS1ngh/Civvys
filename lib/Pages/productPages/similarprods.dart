@@ -7,67 +7,67 @@ class SimilarProds extends StatelessWidget {
     {
       "name": "Aot Tshirt",
       "picture": "images/products/aot tshirt.jpg",
-      "price": "₹599"
+      "price": "599"
     },
     {
       "name": "Bakugo Tshirt MHA",
       "picture": "images/products/bakugo tshirt.jpg",
-      "price": "₹599"
+      "price": "599"
     },
     {
       "name": "Black Hoodie",
       "picture": "images/products/black hoodie.jpg",
-      "price": "₹700"
+      "price": "700"
     },
     {
       "name": "Black Leather Jacket",
       "picture": "images/products/black leather jacket.jpg",
-      "price": "₹11000"
+      "price": "11000"
     },
     {
       "name": "Black Shirt",
       "picture": "images/products/black shirt.jpg",
-      "price": "₹1300"
+      "price": "1300"
     },
     {
       "name": "Dabi Tshirt MHA",
       "picture": "images/products/dabi tshirt.png",
-      "price": "₹599"
+      "price": "599"
     },
     {
       "name": "Maroon half Shirt",
       "picture": "images/products/maroon shirt half.jpg",
-      "price": "₹1100"
+      "price": "1100"
     },
     {
       "name": "Men Shacket",
       "picture": "images/products/men shacket.jpeg",
-      "price": "₹12000"
+      "price": "12000"
     },
     {
       "name": "White Hoodie",
       "picture": "images/products/white hoodie.jpg",
-      "price": "₹1000"
+      "price": "1000"
     },
     {
       "name": "Women Printed Sweatshirt",
       "picture": "images/products/white women sweatshirt.jpg",
-      "price": "₹400"
+      "price": "400"
     },
     {
       "name": "BTS Hoodie",
       "picture": "images/products/women hoodie.jpg",
-      "price": "₹100"
+      "price": "100"
     },
     {
       "name": "Olive Shirt Women",
       "picture": "images/products/women olive shirt.jpg",
-      "price": "₹1700"
+      "price": "1700"
     },
     {
       "name": "Shacket long Women",
       "picture": "images/products/women shacket long.jpg",
-      "price": "₹15000"
+      "price": "15000"
     },
   ];
   SimilarProds({required String prodName, required String picUrl});
@@ -128,7 +128,7 @@ class SimilarProds extends StatelessWidget {
                                 width: 5,
                               ),
                               Text(
-                                product_list[index]['price']!,
+                                '₹${product_list[index]['price']}',
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white),
