@@ -1,55 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
 
 import '../productPages/productpage.dart';
 
-class cartProducts extends StatefulWidget {
-  static List<Map<String, dynamic>> cartItems = [];
+class favItems extends StatefulWidget {
+  static List<Map<String, dynamic>> favs = [];
 
   @override
-  State<cartProducts> createState() => _cartProductsState();
+  State<favItems> createState() => _favItemsState();
 }
 
-class _cartProductsState extends State<cartProducts> {
-  int? length;
-
+class _favItemsState extends State<favItems> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        itemCount: cartProducts.cartItems.length,
-        itemBuilder: (BuildContext context, int index) {
-          var name = cartProducts.cartItems[index]['item']['name'];
-          var pic = cartProducts.cartItems[index]['item']['pic'];
-          var price = cartProducts.cartItems[index]['item']['price'];
-          bool added = cartProducts.cartItems[index]['item']['added'];
-          bool liked = cartProducts.cartItems[index]['item']['liked'];
-          return cartlist(
-            cart_prod_name: name,
-            cart_prod_pic: pic,
-            cart_prod_price: price,
-            added: added,
-            liked: liked,
-          );
+        itemCount: favItems.favs.length,
+        itemBuilder: (BuildContext context, index) {
+          var name = favItems.favs[index]['item']['name'];
+          var pic = favItems.favs[index]['item']['pic'];
+          var price = favItems.favs[index]['item']['price'];
+          bool added = favItems.favs[index]['item']['added'];
+          bool liked = favItems.favs[index]['item']['liked'];
+          return items(
+              Itemname: name,
+              Itempic: pic,
+              Itemprice: price,
+              added: added,
+              liked: liked);
         });
-    // return SingleChildScrollView(
-    //   child: Column(
-    //     children: cartProducts.cartItems.map((e) {
-
-    //     }).toList(),
-    //   ),
-    // );
   }
 }
 
-class cartlist extends StatelessWidget {
-  final cart_prod_name;
-  final cart_prod_pic;
-  final cart_prod_price;
+class items extends StatelessWidget {
+  String Itemname;
+  String Itempic;
+  String Itemprice;
   bool added;
   bool liked;
-  cartlist(
-      {required this.cart_prod_name,
-      required this.cart_prod_pic,
-      required this.cart_prod_price,
+  items(
+      {required this.Itemname,
+      required this.Itempic,
+      required this.Itemprice,
       required this.added,
       required this.liked});
 
@@ -59,9 +51,9 @@ class cartlist extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (BuildContext context) => productPage(
-                  itemName: cart_prod_name,
-                  itemPic: cart_prod_pic,
-                  itemPrice: cart_prod_price.toString(),
+                  itemName: Itemname,
+                  itemPic: Itempic,
+                  itemPrice: Itemprice.toString(),
                   added: added,
                   liked: liked,
                 )));
@@ -84,7 +76,7 @@ class cartlist extends StatelessWidget {
                   ),
                   clipBehavior: Clip.antiAlias,
                   child: Image.asset(
-                    cart_prod_pic,
+                    Itempic,
                     fit: BoxFit.cover,
                     height: 105,
                   ),
@@ -94,7 +86,7 @@ class cartlist extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     Text(
-                      cart_prod_name,
+                      Itemname,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 18,
@@ -105,7 +97,7 @@ class cartlist extends StatelessWidget {
                       height: 10,
                     ),
                     Text(
-                      '₹$cart_prod_price',
+                      '₹$Itemprice',
                       style: const TextStyle(
                           fontSize: 16,
                           color: Colors.black,
@@ -116,8 +108,8 @@ class cartlist extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  cartProducts.cartItems.removeWhere(
-                      (element) => element['item']['name'] == cart_prod_name);
+                  favItems.favs.removeWhere(
+                      (element) => element['item']['name'] == Itemname);
                 },
                 icon: const Icon(
                   Icons.delete,

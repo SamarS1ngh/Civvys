@@ -3,71 +3,97 @@ import 'package:flutter/material.dart';
 
 class SimilarProds extends StatelessWidget {
   // SimilarProds({super.key});
-  var product_list = [
+  List<Map<String, dynamic>> product_list = [
     {
       "name": "Aot Tshirt",
       "picture": "images/products/aot tshirt.jpg",
-      "price": "599"
+      "price": "599",
+      "added": false,
+      "liked": false
     },
     {
       "name": "Bakugo Tshirt MHA",
       "picture": "images/products/bakugo tshirt.jpg",
-      "price": "599"
+      "price": "599",
+      "added": false,
+      "liked": false
     },
     {
       "name": "Black Hoodie",
       "picture": "images/products/black hoodie.jpg",
-      "price": "700"
+      "price": "700",
+      "added": false,
+      "liked": false
     },
     {
       "name": "Black Leather Jacket",
       "picture": "images/products/black leather jacket.jpg",
-      "price": "11000"
+      "price": "11000",
+      "added": false,
+      "liked": false
     },
     {
       "name": "Black Shirt",
       "picture": "images/products/black shirt.jpg",
-      "price": "1300"
+      "price": "1300",
+      "added": false,
+      "liked": false
     },
     {
       "name": "Dabi Tshirt MHA",
       "picture": "images/products/dabi tshirt.png",
-      "price": "599"
+      "price": "599",
+      "added": false,
+      "liked": false
     },
     {
       "name": "Maroon half Shirt",
       "picture": "images/products/maroon shirt half.jpg",
-      "price": "1100"
+      "price": "1100",
+      "added": false,
+      "liked": false
     },
     {
       "name": "Men Shacket",
       "picture": "images/products/men shacket.jpeg",
-      "price": "12000"
+      "price": "12000",
+      "added": false,
+      "liked": false
     },
     {
       "name": "White Hoodie",
       "picture": "images/products/white hoodie.jpg",
-      "price": "1000"
+      "price": "1000",
+      "added": false,
+      "liked": false
     },
     {
       "name": "Women Printed Sweatshirt",
       "picture": "images/products/white women sweatshirt.jpg",
-      "price": "400"
+      "price": "400",
+      "added": false,
+      "liked": false
     },
     {
       "name": "BTS Hoodie",
       "picture": "images/products/women hoodie.jpg",
-      "price": "100"
+      "price": "100",
+      "added": false,
+      "liked": false
     },
     {
       "name": "Olive Shirt Women",
       "picture": "images/products/women olive shirt.jpg",
-      "price": "1700"
+      "price": "1700",
+      "added": false,
+      "liked": false
     },
     {
       "name": "Shacket long Women",
       "picture": "images/products/women shacket long.jpg",
-      "price": "15000"
+      "price": "15000",
+      "added": false,
+      "liked": false
     },
   ];
   SimilarProds({required String prodName, required String picUrl});
@@ -84,9 +110,12 @@ class SimilarProds extends StatelessWidget {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (BuildContext context) {
                 return productPage(
-                    itemName: product_list[index]['name']!,
-                    itemPrice: product_list[index]['price']!,
-                    itemPic: product_list[index]['picture']!);
+                  itemName: product_list[index]['name'],
+                  itemPrice: product_list[index]['price'],
+                  itemPic: product_list[index]['picture'],
+                  added: product_list[index]['added'],
+                  liked: product_list[index]['liked'],
+                );
               }));
             },
             child: Container(

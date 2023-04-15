@@ -19,6 +19,28 @@ class cat extends StatefulWidget {
 class _MyHomePageState extends State<cat> {
   final TextEditingController _search = TextEditingController();
 
+  List<Map<String, dynamic>> results = [];
+  @override
+  void initState() {
+    super.initState();
+    results = topPicks.product_list;
+  }
+
+  void handleresult(String value) {
+    List<Map<String, dynamic>> temp = [];
+    if (value.isEmpty) {
+      temp = topPicks.product_list;
+    } else {
+      temp = topPicks.product_list
+          .where((element) =>
+              element['name'].toLowerCase().contains(value.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      results = temp;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -53,45 +75,45 @@ class _MyHomePageState extends State<cat> {
           body: ListView(
             physics: const BouncingScrollPhysics(),
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
-                child: Container(
-                  width: 150,
-                  height: 40,
-                  decoration: BoxDecoration(
-                      color: Colors.grey[100],
-                      borderRadius: BorderRadius.circular(15)),
-                  child: TextFormField(
-                    style: const TextStyle(fontSize: 14),
-                    autocorrect: true,
-                    controller: _search,
-                    enableSuggestions: true,
-                    cursorColor: Colors.black,
-                    decoration: InputDecoration(
-                        //prefixIcon: Icon(Icons.search),
-                        suffixIcon: Container(
-                          color: Colors.white70,
-                          child: IconButton(
-                              splashRadius: 25,
-                              onPressed: () {
-                                FocusScope.of(context).unfocus();
-                              },
-                              icon: const Icon(
-                                Icons.search,
-                                color: Colors.black,
-                              )),
-                        ),
-                        hintText: 'Search...',
-                        contentPadding:
-                            const EdgeInsets.fromLTRB(20, 12, 12, 12),
-                        isDense: true,
-                        enabledBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent)),
-                        focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent))),
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+              //   child: Container(
+              //     width: 150,
+              //     height: 40,
+              //     decoration: BoxDecoration(
+              //         color: Colors.grey[100],
+              //         borderRadius: BorderRadius.circular(15)),
+              //     child: TextFormField(
+              //       style: const TextStyle(fontSize: 14),
+              //       autocorrect: true,
+              //       controller: _search,
+              //       enableSuggestions: true,
+              //       cursorColor: Colors.black,
+              //       decoration: InputDecoration(
+              //           //prefixIcon: Icon(Icons.search),
+              //           suffixIcon: Container(
+              //             color: Colors.white70,
+              //             child: IconButton(
+              //                 splashRadius: 25,
+              //                 onPressed: () {
+              //                   FocusScope.of(context).unfocus();
+              //                 },
+              //                 icon: const Icon(
+              //                   Icons.search,
+              //                   color: Colors.black,
+              //                 )),
+              //           ),
+              //           hintText: 'Search...',
+              //           contentPadding:
+              //               const EdgeInsets.fromLTRB(20, 12, 12, 12),
+              //           isDense: true,
+              //           enabledBorder: const OutlineInputBorder(
+              //               borderSide: BorderSide(color: Colors.transparent)),
+              //           focusedBorder: const OutlineInputBorder(
+              //               borderSide: BorderSide(color: Colors.transparent))),
+              //     ),
+              //   ),
+              // ),
               const Padding(
                 padding: EdgeInsets.fromLTRB(20, 25, 0, 0),
                 child: Text('Find Your Style',
@@ -109,6 +131,8 @@ class _MyHomePageState extends State<cat> {
                       prod_name: e['name'],
                       prod_image: e['picture'],
                       prod_price: e['price'],
+                      prod_added_in_cart: e['added'],
+                      prod_liked: e['liked'],
                     );
                   }).toList(),
                 ),
@@ -124,8 +148,15 @@ class singleProduct extends StatelessWidget {
   final prod_name;
   final prod_image;
   final prod_price;
+  bool prod_added_in_cart;
+  bool prod_liked;
 
-  singleProduct({this.prod_name, this.prod_image, this.prod_price});
+  singleProduct(
+      {this.prod_name,
+      this.prod_image,
+      this.prod_price,
+      required this.prod_added_in_cart,
+      required this.prod_liked});
 
   @override
   Widget build(BuildContext context) {
@@ -136,6 +167,8 @@ class singleProduct extends StatelessWidget {
                   itemName: prod_name,
                   itemPic: prod_image,
                   itemPrice: prod_price,
+                  added: prod_added_in_cart,
+                  liked: prod_liked,
                 )));
       },
       child: Card(

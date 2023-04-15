@@ -10,6 +10,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:CIVVYS/Pages/Cart/cart.dart';
 
+import '../Favourites/favourites.dart';
+
 class drawer extends StatefulWidget {
   const drawer({super.key});
 
@@ -106,7 +108,12 @@ class _drawerState extends State<drawer> {
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (BuildContext context) {
+                    return favs();
+                  }));
+                },
                 child: const ListTile(
                   title: Text(
                     "Favorites",

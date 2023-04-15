@@ -19,6 +19,11 @@ class _cartState extends State<cart> {
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+    for (var i in cartProducts.cartItems) {
+      setState(() {
+        tot += int.parse(i['item']['prices']);
+      });
+    }
   }
 
   @override
@@ -27,10 +32,12 @@ class _cartState extends State<cart> {
     _razorpay.clear();
   }
 
+  late int tot = 0;
+
   void openCheckout() async {
     var options = {
       'key': 'rzp_test_606fU3NK63EjbH',
-      'amount': 230 * 100,
+      'amount': tot * 100,
       'name': FirebaseAuth.instance.currentUser?.displayName,
       'description': 'Payment',
       'prefill': {
@@ -123,14 +130,14 @@ class _cartState extends State<cart> {
         bottomNavigationBar: cartProducts.cartItems.isNotEmpty
             ? Row(
                 children: [
-                  const Expanded(
+                  Expanded(
                       child: ListTile(
-                    title: Text(
+                    title: const Text(
                       'Total',
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
                     subtitle: Text(
-                      '₹230',
+                      '₹$tot',
                       style: TextStyle(fontWeight: FontWeight.w500),
                     ),
                   )),

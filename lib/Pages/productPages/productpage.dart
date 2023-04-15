@@ -1,4 +1,5 @@
 import 'package:CIVVYS/Pages/Cart/cartProd.dart';
+import 'package:CIVVYS/Pages/Favourites/favitems.dart';
 import 'package:CIVVYS/Pages/HomePage/topPicks.dart';
 import 'package:CIVVYS/Pages/productPages/similarprods.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,9 +11,15 @@ class productPage extends StatefulWidget {
   String itemName;
   String itemPrice;
   String itemPic;
+  bool added;
+  bool liked;
 
   productPage(
-      {required this.itemName, required this.itemPrice, required this.itemPic});
+      {required this.itemName,
+      required this.itemPrice,
+      required this.itemPic,
+      required this.added,
+      required this.liked});
 
   @override
   State<productPage> createState() => _productPageState();
@@ -182,6 +189,8 @@ class _productPageState extends State<productPage> {
               qty = value;
             });
           },
+          added: widget.added,
+          liked: widget.liked,
         ),
       ),
     );
@@ -193,11 +202,15 @@ class page extends StatefulWidget {
   String itemPrice;
   String itemPic;
   Function(int) qtychanged;
+  bool liked;
+  bool added;
   page(
       {required this.itemName,
       required this.itemPrice,
       required this.itemPic,
-      required this.qtychanged});
+      required this.qtychanged,
+      required this.added,
+      required this.liked});
 
   @override
   State<page> createState() => _pageState();
@@ -207,11 +220,29 @@ class _pageState extends State<page> {
   String? fit;
   String size = 'Size';
   String color = 'Color';
-
-  static bool liked = false;
+  // static bool liked = false;
   int i = 1;
-
   String? _color;
+
+  bool likechk() {
+    bool exist = false;
+    for (var i in favItems.favs) {
+      if (i['item']['name'] == widget.itemName) {
+        exist = true;
+      }
+    }
+    return exist;
+  }
+
+  bool check() {
+    bool exist = false;
+    for (var i in cartProducts.cartItems) {
+      if (i['item']['name'] == widget.itemName) {
+        exist = true;
+      }
+    }
+    return exist;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -566,34 +597,98 @@ class _pageState extends State<page> {
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
           ),
           Padding(
+            // add to cart button
             padding: const EdgeInsets.fromLTRB(15, 20, 8, 20),
             child: Row(
               children: [
-                addbutton(
-                  itemname: widget.itemName,
-                  itempic: widget.itemPic,
-                  itemprice: (int.parse(widget.itemPrice) * i).toString(),
+                InkWell(
+                  onTap: check()
+                      ? null
+                      : () {
+                          if (!check()) {
+                            cartProducts.cartItems.add({
+                              'item': {
+                                'name': widget.itemName,
+                                'pic': widget.itemPic,
+                                'price': widget.itemPrice,
+                                'added': widget.added,
+                                'liked': widget.liked
+                              }
+                            });
+                          }
+                          setState(() {
+                            widget.added = true;
+                          });
+                        },
+                  child: Container(
+                    height: 45,
+                    width: 280,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.black),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                            padding: const EdgeInsets.only(left: 80),
+                            child: !widget.added
+                                ? const Text(
+                                    'Add to Cart',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(color: Colors.white),
+                                  )
+                                : const Text(
+                                    'Added to cart',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(color: Colors.white),
+                                  )),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: !widget.added
+                              ? const Icon(
+                                  Icons.add_shopping_cart,
+                                  color: Colors.white,
+                                )
+                              : const Icon(
+                                  Icons.check,
+                                  color: Colors.white,
+                                ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 Container(
                     height: 40,
-                    // width: 30,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-
-                      //color: Colors.orange
                     ),
                     child: IconButton(
+                        //like button
                         splashRadius: 25,
                         onPressed: () {
+                          if (!likechk()) {
+                            favItems.favs.add({
+                              'item': {
+                                'name': widget.itemName,
+                                'pic': widget.itemPic,
+                                'price': widget.itemPrice,
+                                'added': widget.added,
+                                'liked': widget.liked
+                              }
+                            });
+                          }
+
                           setState(() {
-                            liked = !liked;
+                            widget.liked = true;
                           });
                         },
                         icon: Icon(
-                          !liked
+                          !widget.liked
                               ? Icons.favorite_border_outlined
                               : Icons.favorite,
-                          color: !liked ? Colors.black : Colors.red,
+                          color: !widget.liked ? Colors.black : Colors.red,
                           size: 30,
                         )))
               ],
@@ -619,98 +714,5 @@ class _pageState extends State<page> {
         ],
       )
     ]);
-  }
-}
-
-class addbutton extends StatefulWidget {
-  String itemname;
-  String itemprice;
-  String itempic;
-  addbutton(
-      {required this.itemname, required this.itempic, required this.itemprice});
-
-  @override
-  State<addbutton> createState() => _addbuttonState();
-}
-
-class _addbuttonState extends State<addbutton> {
-  static bool added = false;
-  bool check() {
-    bool exist = false;
-    for (var i in cartProducts.cartItems) {
-      if (i['item']['name'] == widget.itemname) {
-        exist = true;
-      }
-    }
-    return exist;
-  }
-
-  void add() {
-    if (check() == false) {
-      setState(() {
-        added = false;
-      });
-      cartProducts.cartItems.add({
-        'item': {
-          'name': widget.itemname,
-          'price': int.parse(widget.itemprice),
-          'pic': widget.itempic,
-        }
-      });
-      // setState(() {
-      //   added = !added;
-      // });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: check()
-          ? null
-          : () {
-              add();
-              setState(() {
-                added = !added;
-              });
-            },
-      child: Container(
-        height: 45,
-        width: 280,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5), color: Colors.black),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-                padding: const EdgeInsets.only(left: 80),
-                child: !added
-                    ? const Text(
-                        'Add to Cart',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white),
-                      )
-                    : const Text(
-                        'Added to cart',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white),
-                      )),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: !added
-                  ? const Icon(
-                      Icons.add_shopping_cart,
-                      color: Colors.white,
-                    )
-                  : const Icon(
-                      Icons.check,
-                      color: Colors.white,
-                    ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }
