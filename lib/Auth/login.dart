@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
+import '../Pages/Cart/cartProd.dart';
 import 'firebase.dart';
 
 class login extends StatefulWidget {
-  const login({super.key});
+  final cartProducts cartprods = cartProducts();
+  login({super.key});
 
   @override
   State<login> createState() => _loginState();
@@ -50,8 +52,10 @@ class _loginState extends State<login> {
           .signInWithEmailAndPassword(email: email.text, password: pswd.text);
 
       if (user != null) {
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (BuildContext context) => MyHomePage()));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (BuildContext context) => MyHomePage(
+                  cartproducts: widget.cartprods,
+                )));
       } else {
         setState(() {
           isloggedin = !isloggedin;
@@ -300,7 +304,7 @@ class _loginState extends State<login> {
                                       Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
                                               builder: (BuildContext context) =>
-                                                  const signUp()));
+                                                  signUp()));
                                     },
                                     child: RichText(
                                       text: TextSpan(
@@ -377,12 +381,15 @@ class _loginState extends State<login> {
                                             borderRadius:
                                                 BorderRadius.circular(25)))),
                                 onPressed: () async {
-                                  await Auth().signInWithGoogle(context).then(
-                                      (user) => Navigator.push(
+                                  await Auth()
+                                      .signInWithGoogle(context)
+                                      .then((user) => Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) =>
-                                                  MyHomePage())));
+                                              builder: (context) => MyHomePage(
+                                                    cartproducts:
+                                                        widget.cartprods,
+                                                  ))));
                                 },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,

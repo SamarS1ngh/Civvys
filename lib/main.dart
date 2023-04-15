@@ -1,4 +1,5 @@
 import 'package:CIVVYS/Auth/options.dart';
+import 'package:CIVVYS/Pages/Cart/cartProd.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -13,11 +14,12 @@ void main() async {
   );
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final cartProducts cartprods = cartProducts();
+  MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,9 +32,11 @@ class MyApp extends StatelessWidget {
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return MyHomePage();
+                return MyHomePage(
+                  cartproducts: cartprods,
+                );
               } else {
-                return const options();
+                return options();
               }
             })
         // const MyHomePage(title: 'CIVVYS'),

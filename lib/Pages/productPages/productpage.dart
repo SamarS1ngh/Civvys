@@ -615,6 +615,8 @@ class _pageState extends State<page> {
                                 'liked': widget.liked
                               }
                             });
+                            cartProducts().cartlength.value =
+                                cartProducts.cartItems.length;
                           }
                           setState(() {
                             widget.added = true;

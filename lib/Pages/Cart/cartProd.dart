@@ -4,13 +4,14 @@ import '../productPages/productpage.dart';
 
 class cartProducts extends StatefulWidget {
   static List<Map<String, dynamic>> cartItems = [];
-
+  ValueNotifier<int> cartlength =
+      ValueNotifier<int>(cartProducts.cartItems.length);
   @override
   State<cartProducts> createState() => _cartProductsState();
 }
 
 class _cartProductsState extends State<cartProducts> {
-  int? length;
+  //int? length;
 
   @override
   Widget build(BuildContext context) {
@@ -118,6 +119,8 @@ class cartlist extends StatelessWidget {
                 onPressed: () {
                   cartProducts.cartItems.removeWhere(
                       (element) => element['item']['name'] == cart_prod_name);
+                  cartProducts().cartlength.value =
+                      cartProducts.cartItems.length;
                 },
                 icon: const Icon(
                   Icons.delete,

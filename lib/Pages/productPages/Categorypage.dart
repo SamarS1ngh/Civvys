@@ -1,3 +1,4 @@
+import 'package:CIVVYS/Pages/Cart/cartProd.dart';
 import 'package:CIVVYS/Pages/HomePage/topPicks.dart';
 import 'package:CIVVYS/Pages/Cart/cart.dart';
 import 'package:CIVVYS/Pages/productPages/productpage.dart';
@@ -143,7 +144,7 @@ class _MyHomePageState extends State<cat> {
   }
 }
 
-class singleProduct extends StatelessWidget {
+class singleProduct extends StatefulWidget {
   // final id;
   final prod_name;
   final prod_image;
@@ -159,16 +160,32 @@ class singleProduct extends StatelessWidget {
       required this.prod_liked});
 
   @override
+  State<singleProduct> createState() => _singleProductState();
+}
+
+class _singleProductState extends State<singleProduct> {
+  bool add = false;
+  bool check() {
+    bool exist = false;
+    for (var i in cartProducts.cartItems) {
+      if (i['item']['name'] == widget.prod_name) {
+        exist = true;
+      }
+    }
+    return exist;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (BuildContext context) => productPage(
-                  itemName: prod_name,
-                  itemPic: prod_image,
-                  itemPrice: prod_price,
-                  added: prod_added_in_cart,
-                  liked: prod_liked,
+                  itemName: widget.prod_name,
+                  itemPic: widget.prod_image,
+                  itemPrice: widget.prod_price,
+                  added: widget.prod_added_in_cart,
+                  liked: widget.prod_liked,
                 )));
       },
       child: Card(
@@ -188,7 +205,7 @@ class singleProduct extends StatelessWidget {
                   ),
                   clipBehavior: Clip.antiAlias,
                   child: Image.asset(
-                    prod_image,
+                    widget.prod_image,
                     fit: BoxFit.cover,
                     height: 105,
                   ),
@@ -198,7 +215,7 @@ class singleProduct extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     Text(
-                      prod_name,
+                      widget.prod_name,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 18,
@@ -209,7 +226,7 @@ class singleProduct extends StatelessWidget {
                       height: 10,
                     ),
                     Text(
-                      '₹$prod_price',
+                      '₹${widget.prod_price}',
                       style: TextStyle(
                           fontSize: 16,
                           color: Colors.black,
@@ -235,8 +252,20 @@ class singleProduct extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
                           InkWell(
-                            onTap: () {},
-                            child: const Text(
+                            onTap: () {
+                              if (!check()) {
+                                cartProducts.cartItems.add({
+                                  'item': {
+                                    'name': widget.prod_name,
+                                    'pic': widget.prod_image,
+                                    'price': widget.prod_price,
+                                    'added': true,
+                                    'liked': false
+                                  }
+                                });
+                              }
+                            },
+                            child: Text(
                               "Add to Cart",
                               style: TextStyle(
                                   color: Colors.orange,

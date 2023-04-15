@@ -4,11 +4,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../Pages/Cart/cartProd.dart';
 import 'firebase.dart';
 import 'login.dart';
 
 class options extends StatefulWidget {
-  const options({super.key});
+  options({super.key});
+  final cartProducts cartprods = cartProducts();
 
   @override
   State<options> createState() => _optionsState();
@@ -125,11 +127,14 @@ class _optionsState extends State<options> {
                                       borderRadius:
                                           BorderRadius.circular(25)))),
                           onPressed: () async {
-                            await Auth().signInWithGoogle(context).then(
-                                (user) => Navigator.push(
+                            await Auth()
+                                .signInWithGoogle(context)
+                                .then((user) => Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => MyHomePage())));
+                                        builder: (context) => MyHomePage(
+                                              cartproducts: widget.cartprods,
+                                            ))));
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,

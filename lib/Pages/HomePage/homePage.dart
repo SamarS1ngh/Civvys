@@ -9,7 +9,8 @@ import 'Categories.dart';
 import 'package:badges/badges.dart' as badges;
 
 class MyHomePage extends StatefulWidget {
-  // const MyHomePage({super.key, required this.title});
+  final cartProducts cartproducts;
+  const MyHomePage({super.key, required this.cartproducts});
 
   // final String title;
 
@@ -18,20 +19,20 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final TextEditingController _search = TextEditingController();
-  int cartlength = cartProducts.cartItems.length;
+  //final TextEditingController _search = TextEditingController();
+  // int cartlength = cartProducts.cartItems.length;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _updateCartItems();
+    // _updateCartItems();
   }
 
-  void _updateCartItems() {
-    setState(() {
-      cartlength = cartProducts.cartItems.length;
-    });
-  }
+  // void _updateCartItems() {
+  //   setState(() {
+  //     cartlength = cartProducts.cartItems.length;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -62,26 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     icon: const Icon(Icons.search),
                     splashRadius: 35,
                   ),
-                  badges.Badge(
-                    position: badges.BadgePosition.topEnd(end: 0.5, top: -1.3),
-                    showBadge: cartProducts.cartItems.isNotEmpty,
-                    badgeContent: Text(
-                      cartProducts.cartItems.length.toString(),
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (BuildContext context) {
-                          return const cart();
-                        }));
-                      },
-                      icon: const Icon(
-                        Icons.shopping_cart,
-                      ),
-                      splashRadius: 35,
-                    ),
-                  ),
+                  iconbadge()
                 ],
               ),
             ),
@@ -164,5 +146,42 @@ class _MyHomePageState extends State<MyHomePage> {
             )),
       ),
     );
+  }
+}
+
+class iconbadge extends StatefulWidget {
+  const iconbadge({super.key});
+
+  @override
+  State<iconbadge> createState() => _iconbadgeState();
+}
+
+class _iconbadgeState extends State<iconbadge> {
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<int>(
+        valueListenable: cartProducts().cartlength,
+        builder: (context, cartcount, _) {
+          return badges.Badge(
+            position: badges.BadgePosition.topEnd(end: 0.5, top: -1.3),
+            showBadge: cartProducts.cartItems.isNotEmpty,
+            badgeContent: Text(
+              cartProducts.cartItems.length.toString(),
+              style: const TextStyle(color: Colors.white),
+            ),
+            child: IconButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (BuildContext context) {
+                  return const cart();
+                }));
+              },
+              icon: const Icon(
+                Icons.shopping_cart,
+              ),
+              splashRadius: 35,
+            ),
+          );
+        });
   }
 }
