@@ -249,7 +249,7 @@ class _pageState extends State<page> {
     return ListView(physics: const BouncingScrollPhysics(), children: [
       Column(
         children: [
-          Container(
+          SizedBox(
             height: 300,
             child: Image.asset(widget.itemPic),
           ),
@@ -279,234 +279,232 @@ class _pageState extends State<page> {
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-            child: Flexible(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  MaterialButton(
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              actions: [
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('Done'))
-                              ],
-                              title: const Text('Choose Size'),
-                              content: Column(
-                                children: [
-                                  RadioListTile(
-                                      title: const Text('S'),
-                                      value: 'S',
-                                      groupValue: fit,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          fit = value.toString();
-                                          size = value.toString();
-                                        });
-                                      }),
-                                  RadioListTile(
-                                      title: const Text('M'),
-                                      value: 'M',
-                                      groupValue: fit,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          fit = value.toString();
-                                          size = value.toString();
-                                        });
-                                      }),
-                                  RadioListTile(
-                                      title: const Text('L'),
-                                      value: 'L',
-                                      groupValue: fit,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          fit = value.toString();
-                                          size = value.toString();
-                                        });
-                                      }),
-                                  RadioListTile(
-                                      title: const Text('XL'),
-                                      value: 'XL',
-                                      groupValue: fit,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          fit = value.toString();
-                                          size = value.toString();
-                                        });
-                                      }),
-                                  RadioListTile(
-                                      title: const Text('XXL'),
-                                      value: 'XXL',
-                                      groupValue: fit,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          fit = value.toString();
-                                          size = value.toString();
-                                        });
-                                      }),
-                                  RadioListTile(
-                                      title: const Text(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                MaterialButton(
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text('Done'))
+                            ],
+                            title: const Text('Choose Size'),
+                            content: Column(
+                              children: [
+                                RadioListTile(
+                                    title: const Text('S'),
+                                    value: 'S',
+                                    groupValue: fit,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        fit = value.toString();
+                                        size = value.toString();
+                                      });
+                                    }),
+                                RadioListTile(
+                                    title: const Text('M'),
+                                    value: 'M',
+                                    groupValue: fit,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        fit = value.toString();
+                                        size = value.toString();
+                                      });
+                                    }),
+                                RadioListTile(
+                                    title: const Text('L'),
+                                    value: 'L',
+                                    groupValue: fit,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        fit = value.toString();
+                                        size = value.toString();
+                                      });
+                                    }),
+                                RadioListTile(
+                                    title: const Text('XL'),
+                                    value: 'XL',
+                                    groupValue: fit,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        fit = value.toString();
+                                        size = value.toString();
+                                      });
+                                    }),
+                                RadioListTile(
+                                    title: const Text('XXL'),
+                                    value: 'XXL',
+                                    groupValue: fit,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        fit = value.toString();
+                                        size = value.toString();
+                                      });
+                                    }),
+                                RadioListTile(
+                                    title: const Text(
+                                      'I\'m so fat they are gonna make yo mama jokes on my kids',
+                                    ),
+                                    value:
                                         'I\'m so fat they are gonna make yo mama jokes on my kids',
-                                      ),
-                                      value:
-                                          'I\'m so fat they are gonna make yo mama jokes on my kids',
-                                      groupValue: fit,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          fit = value.toString();
-                                          size = 'Huge';
-                                        });
-                                      }),
-                                ],
-                              ),
-                            );
-                          });
-                    },
-                    child: Row(
-                      children: [
-                        Text(
-                          '$size ',
-                          style: const TextStyle(
-                              fontSize: 16, color: Colors.black54),
-                        ),
-                        const Icon(
-                          Icons.arrow_drop_down,
-                          color: Colors.black54,
-                        )
-                      ],
-                    ),
-                  ),
-                  MaterialButton(
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              actions: [
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('Done'))
+                                    groupValue: fit,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        fit = value.toString();
+                                        size = 'Huge';
+                                      });
+                                    }),
                               ],
-                              title: const Text('Choose Color'),
-                              content: Column(
-                                children: [
-                                  RadioListTile(
-                                    title: const Text('Black'),
-                                    value: 'Black',
-                                    groupValue: _color,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        color = value.toString();
-                                        _color = value.toString();
-                                      });
-                                    },
-                                  ),
-                                  RadioListTile(
-                                    title: const Text('Blue'),
-                                    value: 'Blue',
-                                    groupValue: _color,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        color = value.toString();
-                                        _color = value.toString();
-                                      });
-                                    },
-                                  ),
-                                  RadioListTile(
-                                    title: const Text('Green'),
-                                    value: 'Green',
-                                    groupValue: _color,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        color = value.toString();
-                                        _color = value.toString();
-                                      });
-                                    },
-                                  ),
-                                  RadioListTile(
-                                    title: const Text('Red'),
-                                    value: 'Red',
-                                    groupValue: _color,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        color = value.toString();
-                                        _color = value.toString();
-                                      });
-                                    },
-                                  ),
-                                  RadioListTile(
-                                    title: const Text('White'),
-                                    value: 'White',
-                                    groupValue: _color,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        color = value.toString();
-                                        _color = value.toString();
-                                      });
-                                    },
-                                  ),
-                                ],
-                              ),
-                            );
-                          });
-                    },
-                    child: Row(
-                      children: [
-                        Text(
-                          '$color',
-                          style: const TextStyle(
-                              fontSize: 16, color: Colors.black54),
-                        ),
-                        const Icon(
-                          Icons.arrow_drop_down,
-                          color: Colors.black54,
-                        )
-                      ],
-                    ),
-                  ),
-                  Row(
+                            ),
+                          );
+                        });
+                  },
+                  child: Row(
                     children: [
-                      const Text(
-                        'Qty: ',
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black54,
-                            fontWeight: FontWeight.w500),
+                      Text(
+                        '$size ',
+                        style: const TextStyle(
+                            fontSize: 16, color: Colors.black54),
                       ),
-                      IconButton(
-                          onPressed: () {
-                            setState(() {
-                              if (i > 1) --i;
-                            });
-                            widget.qtychanged(i);
-                          },
-                          icon: const Icon(
-                            Icons.remove,
-                            size: 18,
-                          )),
-                      Text('$i'),
-                      IconButton(
-                          onPressed: () {
-                            setState(() {
-                              ++i;
-                            });
-                            widget.qtychanged(i);
-                          },
-                          icon: const Icon(
-                            Icons.add,
-                            size: 18,
-                          )),
+                      const Icon(
+                        Icons.arrow_drop_down,
+                        color: Colors.black54,
+                      )
                     ],
-                  )
-                ],
-              ),
+                  ),
+                ),
+                MaterialButton(
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text('Done'))
+                            ],
+                            title: const Text('Choose Color'),
+                            content: Column(
+                              children: [
+                                RadioListTile(
+                                  title: const Text('Black'),
+                                  value: 'Black',
+                                  groupValue: _color,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      color = value.toString();
+                                      _color = value.toString();
+                                    });
+                                  },
+                                ),
+                                RadioListTile(
+                                  title: const Text('Blue'),
+                                  value: 'Blue',
+                                  groupValue: _color,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      color = value.toString();
+                                      _color = value.toString();
+                                    });
+                                  },
+                                ),
+                                RadioListTile(
+                                  title: const Text('Green'),
+                                  value: 'Green',
+                                  groupValue: _color,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      color = value.toString();
+                                      _color = value.toString();
+                                    });
+                                  },
+                                ),
+                                RadioListTile(
+                                  title: const Text('Red'),
+                                  value: 'Red',
+                                  groupValue: _color,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      color = value.toString();
+                                      _color = value.toString();
+                                    });
+                                  },
+                                ),
+                                RadioListTile(
+                                  title: const Text('White'),
+                                  value: 'White',
+                                  groupValue: _color,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      color = value.toString();
+                                      _color = value.toString();
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                        });
+                  },
+                  child: Row(
+                    children: [
+                      Text(
+                        '$color',
+                        style: const TextStyle(
+                            fontSize: 16, color: Colors.black54),
+                      ),
+                      const Icon(
+                        Icons.arrow_drop_down,
+                        color: Colors.black54,
+                      )
+                    ],
+                  ),
+                ),
+                Row(
+                  children: [
+                    const Text(
+                      'Qty: ',
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          setState(() {
+                            if (i > 1) --i;
+                          });
+                          widget.qtychanged(i);
+                        },
+                        icon: const Icon(
+                          Icons.remove,
+                          size: 18,
+                        )),
+                    Text('$i'),
+                    IconButton(
+                        onPressed: () {
+                          setState(() {
+                            ++i;
+                          });
+                          widget.qtychanged(i);
+                        },
+                        icon: const Icon(
+                          Icons.add,
+                          size: 18,
+                        )),
+                  ],
+                )
+              ],
             ),
           ),
           Padding(
