@@ -23,12 +23,12 @@ class _signUpState extends State<signUp> {
   final TextEditingController _pswd = TextEditingController();
   final TextEditingController _name = TextEditingController();
 
-  handleSubmit() {
+  handleSubmit() async {
     if (formkey.currentState!.validate()) {
       setState(() {
         isloggedin = !isloggedin;
       });
-      Auth().registerWithEmailAndPassword(
+      await Auth().registerWithEmailAndPassword(
           name: _name.text, email: _email.text, password: _pswd.text);
 
       if (FirebaseAuth.instance.currentUser != null) {
